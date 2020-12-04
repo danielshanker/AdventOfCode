@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	lines := tools.readInputLines("input.txt")
+	lines := readInputLines("input.txt")
 	//lines := readInputLines("../sample.txt")
 
 	answer1, _ := readOpCode(lines)
