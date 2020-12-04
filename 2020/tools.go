@@ -1,49 +1,12 @@
-package main
+package tools
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
 	"strings"
 )
-
-func main() {
-	lines := tools.readInputLines("input.txt")
-	//lines := readInputLines("../sample.txt")
-
-	answer1, _ := readOpCode(lines)
-	var answer2 int
-
-	i := 0
-	for _, line := range lines {
-		var valid bool
-		inst := strings.Split(line, " ")[0]
-		val := strings.Split(line, " ")[1]
-		ogLine := line
-		if inst == "acc" {
-			i++
-			continue
-		}
-		if inst == "jmp" {
-			line = "nop " + val
-		}
-		if inst == "nop" {
-			line = "jmp " + val
-		}
-		lines[i] = line
-		answer2, valid = readOpCode(lines)
-		lines[i] = ogLine
-		if valid {
-			break
-		}
-		i++
-	}
-
-	fmt.Println(fmt.Sprintf("Answer 1 : %d", answer1))
-	fmt.Println(fmt.Sprintf("Answer 2 : %d", answer2))
-}
 
 func readOpCode(instructions []string) (int, bool) {
 	curLine := 0
