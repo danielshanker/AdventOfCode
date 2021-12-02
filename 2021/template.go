@@ -9,19 +9,28 @@ import (
 )
 
 func main() {
-	//lines := readInputLines("input.txt")
-	lines := readInputLines("../sample.txt")
+	fmt.Print("sample: ")
+	part1(readInputLines("../sample.txt"))
+	part1(readInputLines("input.txt"))
 
-	for _, line := range lines {
-		fmt.Println(line)
-	}
+	fmt.Print("\n\nsample: ")
+	part2(readInputLines("../sample.txt"))
+	part2(readInputLines("input.txt"))
 
+}
+
+func part1(lines []string) {
 	answer1 := 0
-	answer2 := 0
 
 	fmt.Println(fmt.Sprintf("Answer 1 : %d", answer1))
+}
+
+func part2(lines []string) {
+	answer2 := 0
+
 	fmt.Println(fmt.Sprintf("Answer 2 : %d", answer2))
 }
+
 
 func s2i(val string) int {
 	num, err := strconv.Atoi(val)
