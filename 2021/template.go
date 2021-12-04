@@ -9,13 +9,16 @@ import (
 )
 
 func main() {
+	sample := readInputLines("../sample.txt")
+	input := readInputLines("input.txt")
+
 	fmt.Print("sample: ")
-	part1(readInputLines("../sample.txt"))
-	part1(readInputLines("input.txt"))
+	part1(sample)
+	part1(input)
 
 	fmt.Print("\n\nsample: ")
-	part2(readInputLines("../sample.txt"))
-	part2(readInputLines("input.txt"))
+	part2(sample)
+	part2(input)
 
 }
 
