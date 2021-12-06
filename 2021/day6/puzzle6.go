@@ -6,10 +6,11 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
-	sample := readInputLines("sample.txt")
+	sample := readInputLines("/home/daniel.shanker/Pers/AdventOfCode/2021/day6/sample.txt")
 	input := readInputLines("input.txt")
 
 	fmt.Print("sample: ")
@@ -23,17 +24,46 @@ func main() {
 }
 
 func part1(lines []string) {
-	answer1 := 0
+	answer1 := spawn(lines[0], 80)
 
 	fmt.Println(fmt.Sprintf("Answer 1 : %d", answer1))
 }
 
 func part2(lines []string) {
-	answer2 := 0
+
+	answer2 := spawn(lines[0], 256)
 
 	fmt.Println(fmt.Sprintf("Answer 2 : %d", answer2))
 }
 
+func spawn (line string, days int) int{
+	var fish [9]int
+
+	fishInput := strings.Split(line, ",")
+	for _, i := range fishInput {
+		fish[s2i(i)]++
+	}
+
+	totalFish := len(fishInput)
+
+	for i:=0; i< days; i++ {
+		var tempFish [9]int
+		for j:=8; j>=0; j-- {
+			if j == 0 {
+				tempFish[6] += fish[0]
+				tempFish[8] = fish[0]
+				totalFish += fish[0]
+				continue
+			}
+			tempFish[j-1] = fish[j]
+		}
+		for j:=0; j<9; j++ {
+			fish[j] = tempFish[j]
+		}
+	}
+
+	return totalFish
+}
 
 func s2i(val string) int {
 	num, err := strconv.Atoi(val)
