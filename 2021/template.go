@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -9,16 +10,18 @@ import (
 )
 
 func main() {
-	sample := readInputLines("sample.txt")
-	input := readInputLines("input.txt")
+	test := flag.Bool("t", false, "use sample")
+	flag.Parse()
 
-	fmt.Print("sample: ")
-	part1(sample)
-	part1(input)
-
-	fmt.Print("\n\nsample: ")
-	part2(sample)
-	part2(input)
+	if *test {
+		sample := readInputLines("/home/daniel.shanker/Pers/AdventOfCode/2021/dayx/sample.txt")
+		part1(sample)
+		part2(sample)
+	} else {
+		input := readInputLines("/home/daniel.shanker/Pers/AdventOfCode/2021/dayx/input.txt")
+		part1(input)
+		part2(input)
+	}
 
 }
 
