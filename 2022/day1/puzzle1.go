@@ -31,12 +31,12 @@ func part1(lines []string) []int {
 	var calories []int
 	curCount := 0
 	for _, line := range lines {
-		intLine, err := strconv.Atoi(line)
-		if err != nil {
+		if line == "" {
 			calories = append(calories, curCount)
 			curCount = 0
+			continue
 		}
-		curCount += intLine
+		curCount += s2i(line)
 	}
 	calories = append(calories, curCount)
 	curCount = 0
