@@ -14,11 +14,11 @@ func main() {
 	flag.Parse()
 
 	if *test {
-		sample := readInputLines("/home/daniel.shanker/Pers/AdventOfCode/2021/dayx/sample.txt")
+		sample := readInputLines("/home/daniel.shanker/Pers/AdventOfCode/2022/dayx/sample.txt")
 		part1(sample)
 		part2(sample)
 	} else {
-		input := readInputLines("/home/daniel.shanker/Pers/AdventOfCode/2021/dayx/input.txt")
+		input := readInputLines("/home/daniel.shanker/Pers/AdventOfCode/2022/dayx/input.txt")
 		part1(input)
 		part2(input)
 	}
