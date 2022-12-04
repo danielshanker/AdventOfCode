@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -37,7 +38,6 @@ func part2(lines []string) {
 	fmt.Println(fmt.Sprintf("Answer 2 : %d", answer2))
 }
 
-
 func s2i(val string) int {
 	num, err := strconv.Atoi(val)
 	if err != nil {
@@ -59,7 +59,8 @@ func readInputLines(fileName string) []string {
 	var text []string
 
 	for scanner.Scan() {
-		text = append(text, scanner.Text())
+		t := strings.TrimSpace(scanner.Text())
+		text = append(text, t)
 	}
 
 	return text
