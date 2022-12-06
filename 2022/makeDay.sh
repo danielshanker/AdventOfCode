@@ -1,5 +1,5 @@
 day=`ls -l | grep -c ^d`
-dayNum=$(expr $day + 1)
+dayNum=$(expr $day)
 day=day$dayNum
 mkdir $day
 cp template/template.go $day/puzzle$dayNum.go
