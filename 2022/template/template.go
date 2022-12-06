@@ -31,5 +31,5 @@ func part1(lines []string) {
 func part2(lines []string) {
 	answer2 := 0
 
-	fmt.Printf("Answer 1 : %d\n", answer2)
+	fmt.Printf("Answer 2 : %d\n", answer2)
 }
