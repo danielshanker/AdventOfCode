@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"utils"
+	. "utils"
 )
 
 func main() {
@@ -11,7 +11,7 @@ func main() {
 	flag.Parse()
 
 	if *test {
-		sample := utils.ReadInputLines("/home/daniel.shanker/Pers/AdventOfCode/2022/day6/sample.txt")
+		sample := ReadInputLines("/home/daniel.shanker/Pers/AdventOfCode/2022/day6/sample.txt")
 		for i := 0; i < len(sample); i++ {
 			part1(sample[i])
 		}
@@ -19,7 +19,7 @@ func main() {
 			part2(sample[i])
 		}
 	} else {
-		input := utils.ReadInputLines("/home/daniel.shanker/Pers/AdventOfCode/2022/day6/input.txt")
+		input := ReadInputLines("/home/daniel.shanker/Pers/AdventOfCode/2022/day6/input.txt")
 		part1(input[0])
 		part2(input[0])
 	}
