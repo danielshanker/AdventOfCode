@@ -44,31 +44,9 @@ func part1(lines []string) {
 	}
 
 	var curDir *directory
-	inList := false
 
 	for _, line := range lines {
 		command := strings.Split(line, " ")
-
-		if inList {
-			if command[0] == "$" {
-				inList = false
-			} else {
-				if command[0] == "dir" {
-					newDir := directory{
-						name:     command[1],
-						upperDir: curDir,
-						dirs:     make(map[string]*directory),
-					}
-					curDir.dirs[command[1]] = &newDir
-				} else {
-					newFile := file{
-						size: S2i(command[0]),
-						name: command[1],
-					}
-					curDir.files = append(curDir.files, newFile)
-				}
-			}
-		}
 
 		if command[0] == "$" {
 			if command[1] == "cd" {
@@ -91,8 +69,22 @@ func part1(lines []string) {
 				}
 			}
 			if command[1] == "ls" {
-				inList = true
 				continue
+			}
+		} else {
+			if command[0] == "dir" {
+				newDir := directory{
+					name:     command[1],
+					upperDir: curDir,
+					dirs:     make(map[string]*directory),
+				}
+				curDir.dirs[command[1]] = &newDir
+			} else {
+				newFile := file{
+					size: S2i(command[0]),
+					name: command[1],
+				}
+				curDir.files = append(curDir.files, newFile)
 			}
 		}
 	}
@@ -128,31 +120,9 @@ func part2(lines []string) {
 	}
 
 	var curDir *directory
-	inList := false
 
 	for _, line := range lines {
 		command := strings.Split(line, " ")
-
-		if inList {
-			if command[0] == "$" {
-				inList = false
-			} else {
-				if command[0] == "dir" {
-					newDir := directory{
-						name:     command[1],
-						upperDir: curDir,
-						dirs:     make(map[string]*directory),
-					}
-					curDir.dirs[command[1]] = &newDir
-				} else {
-					newFile := file{
-						size: S2i(command[0]),
-						name: command[1],
-					}
-					curDir.files = append(curDir.files, newFile)
-				}
-			}
-		}
 
 		if command[0] == "$" {
 			if command[1] == "cd" {
@@ -175,8 +145,22 @@ func part2(lines []string) {
 				}
 			}
 			if command[1] == "ls" {
-				inList = true
 				continue
+			}
+		} else {
+			if command[0] == "dir" {
+				newDir := directory{
+					name:     command[1],
+					upperDir: curDir,
+					dirs:     make(map[string]*directory),
+				}
+				curDir.dirs[command[1]] = &newDir
+			} else {
+				newFile := file{
+					size: S2i(command[0]),
+					name: command[1],
+				}
+				curDir.files = append(curDir.files, newFile)
 			}
 		}
 	}
