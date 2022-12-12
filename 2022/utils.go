@@ -51,3 +51,18 @@ func (s *Stack) Pop() string {
 	*s = (*s)[:len(*s)-1]
 	return last
 }
+
+type Queue []string
+
+func (q *Queue) Pop() string {
+	if len(*q) == 0 {
+		return ""
+	}
+	first := (*q)[0]
+	*q = (*q)[1:]
+	return first
+}
+
+func (q *Queue) Push(str string) {
+	*q = append(*q, str)
+}
