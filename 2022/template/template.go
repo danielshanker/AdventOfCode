@@ -23,13 +23,13 @@ func main() {
 }
 
 func part1(lines []string) {
-	answer1 := 0
+	answer := 0
 
-	fmt.Printf("Answer 1 : %d\n", answer1)
+	fmt.Printf("Answer 1 : %d\n", answer)
 }
 
 func part2(lines []string) {
-	answer2 := 0
+	answer := 0
 
-	fmt.Printf("Answer 2 : %d\n", answer2)
+	fmt.Printf("Answer 2 : %d\n", answer)
 }

@@ -156,75 +156,62 @@ func part2(lines []string) {
 		points = append(points, chars)
 	}
 
-	var starts []*point
+	var start *point
 
 	for i := 0; i < len(points); i++ {
 		for j := 0; j < len(points[0]); j++ {
 			curPoint := points[i][j]
-			if curPoint.value == 0 {
-				starts = append(starts, curPoint)
+			if curPoint.isEnd {
+				start = curPoint
 			}
 			//up
 			if i > 0 {
 				if points[i-1][j].value <= (curPoint.value + 1) {
-					curPoint.possiblePoints = append(curPoint.possiblePoints, points[i-1][j])
+					points[i-1][j].possiblePoints = append(points[i-1][j].possiblePoints, curPoint)
 				}
 			}
 			//down
 			if i < len(points)-1 {
 				if points[i+1][j].value <= (curPoint.value + 1) {
-					curPoint.possiblePoints = append(curPoint.possiblePoints, points[i+1][j])
+					points[i+1][j].possiblePoints = append(points[i+1][j].possiblePoints, curPoint)
 				}
 			}
 			//left
 			if j > 0 {
 				if points[i][j-1].value <= (curPoint.value + 1) {
-					curPoint.possiblePoints = append(curPoint.possiblePoints, points[i][j-1])
+					points[i][j-1].possiblePoints = append(points[i][j-1].possiblePoints, curPoint)
 				}
 			}
 			//right
 			if j < len(points[0])-1 {
 				if points[i][j+1].value <= (curPoint.value + 1) {
-					curPoint.possiblePoints = append(curPoint.possiblePoints, points[i][j+1])
+					points[i][j+1].possiblePoints = append(points[i][j+1].possiblePoints, curPoint)
 				}
 			}
 		}
 	}
 
-	for _, start := range starts {
-		q := queue{}
-		start.isStart = true
-		start.explored = true
-		start.distance = 0
-		q.push(*start)
-		for len(q) != 0 {
-			curP := q.pop()
-			if curP.isEnd {
-				if curP.distance < answer2 || answer2 == 0 {
-					answer2 = curP.distance
-				}
-				break
+	q := queue{}
+	start.isStart = true
+	start.explored = true
+	start.distance = 0
+	q.push(*start)
+	for len(q) != 0 {
+		curP := q.pop()
+		if curP.value == 0 {
+			if curP.distance < answer2 || answer2 == 0 {
+				answer2 = curP.distance
 			}
-			for _, p := range curP.possiblePoints {
-				if !p.explored {
-					p.explored = true
-					p.distance = curP.distance + 1
-					q.push(*p)
-				}
+			break
+		}
+		for _, p := range curP.possiblePoints {
+			if !p.explored {
+				p.explored = true
+				p.distance = curP.distance + 1
+				q.push(*p)
 			}
 		}
-		reset(points, start)
 	}
 
 	fmt.Printf("Answer 2 : %d\n", answer2)
-}
-
-func reset(points [][]*point, start *point) {
-	for i := 0; i < len(points); i++ {
-		for j := 0; j < len(points[0]); j++ {
-			points[i][j].distance = 0
-			points[i][j].explored = false
-		}
-	}
-	start.isStart = false
 }
