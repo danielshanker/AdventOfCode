@@ -14,7 +14,8 @@ type Stack []string
 func S2i(val string) int {
 	num, err := strconv.Atoi(val)
 	if err != nil {
-		fmt.Println("OH NO! OH NO! NOT AN INT!")
+		fmt.Print("OH NO! OH NO! NOT AN INT! - ")
+		fmt.Println(val)
 	}
 	return num
 }
