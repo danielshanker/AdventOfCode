@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"math"
 	"strings"
 	. "utils"
 )
@@ -33,19 +34,9 @@ func part1(lines []string) {
 
 	for i, t := range times {
 		time := S2i(t)
-		winCount := 0
-		up := true
 		distance := S2i(distances[i])
-		for j := 0; j < time; j++ {
-			a := getTotalDist(j, time)
-			if a > distance {
-				winCount++
-				up = false
-			} else if !up {
-				break
-			}
-		}
-		answer *= winCount
+		a, b := quadraticForm(time, distance)
+		answer *= (a - b + 1)
 	}
 
 	fmt.Printf("day6 Answer 1 : %d\n", answer)
@@ -60,29 +51,21 @@ func part2(lines []string) {
 	times = times[1:]
 	distance := S2i(strings.Join(distances, ""))
 	time := S2i(strings.Join(times, ""))
-
-	winCount := 0
-	up := true
-	for j := 0; j < time; j++ {
-		a := getTotalDist(j, time)
-		if a > distance {
-			winCount++
-			up = false
-		} else if !up {
-			break
-		}
-	}
-	answer *= winCount
+	a, b := quadraticForm(time, distance)
+	answer *= (a - b + 1)
 
 	fmt.Printf("day6 Answer 2 : %d\n", answer)
 }
 
-func getTotalDist(heldTime int, totalTime int) int {
-	if heldTime >= totalTime {
-		return 0
-	}
-	td := heldTime * (totalTime - heldTime)
+func quadraticForm(totalTime, distance int) (int, int) {
+	b := float64(-1 * totalTime)
+	a := float64(1)
+	c := float64(distance) + 0.00000000001
 
-	return td
+	inside := math.Pow(float64(b), 2) - 4*a*c
+	quadA := (-1*b + math.Sqrt(float64(inside))) / 2 * a
+	quadB := (-1*b - math.Sqrt(float64(inside))) / 2 * a
+
+	return int(math.Floor(quadA)), int(math.Ceil(quadB))
 
 }
