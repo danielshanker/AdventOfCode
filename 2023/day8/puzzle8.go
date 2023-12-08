@@ -43,7 +43,6 @@ type connection struct {
 
 func part1(lines []string) int {
 	answer := 0
-	return 6
 	connections := map[string]connection{}
 	conReg := regexp.MustCompile("[A-Z0-9]{3}")
 
