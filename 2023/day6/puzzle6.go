@@ -27,10 +27,8 @@ func main() {
 func part1(lines []string) {
 	answer := 1
 
-	times := strings.Fields(lines[0])
-	distances := strings.Fields(lines[1])
-	distances = distances[1:]
-	times = times[1:]
+	times := strings.Fields(lines[0])[1:]
+	distances := strings.Fields(lines[1])[1:]
 
 	for i, t := range times {
 		time := S2i(t)
@@ -45,12 +43,8 @@ func part1(lines []string) {
 func part2(lines []string) {
 	answer := 1
 
-	times := strings.Fields(lines[0])
-	distances := strings.Fields(lines[1])
-	distances = distances[1:]
-	times = times[1:]
-	distance := S2i(strings.Join(distances, ""))
-	time := S2i(strings.Join(times, ""))
+	distance := S2i(strings.Join(strings.Fields(lines[1])[1:], ""))
+	time := S2i(strings.Join(strings.Fields(lines[0])[1:], ""))
 	a, b := quadraticForm(time, distance)
 	answer *= (a - b + 1)
 
