@@ -65,7 +65,7 @@ func part1(lines []string) int {
 
 	curNode := "AAA"
 
-	for true {
+	for {
 		found := false
 		for _, cha := range instructions {
 			answer++
@@ -118,7 +118,7 @@ func part2(lines []string) int {
 
 	for i, curNode := range aNodes {
 		count := 0
-		for true {
+		for {
 			found := false
 			for _, cha := range instructions {
 				count++
