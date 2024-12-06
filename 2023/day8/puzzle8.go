@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"regexp"
+	"strconv"
 	"strings"
 	. "utils"
 )
@@ -12,6 +13,20 @@ func main() {
 	test := flag.Bool("t", false, "use sample")
 	flag.Parse()
 
+	reg := regexp.MustCompile(`"([0-9]+)"`)
+	query := `select(.[70]=="301" or .[70]=="303" or .[70]=="322" or .[70]=="330" or .[70]=="4410" or .[70]=="4480" or .[70]=="4520" or .[70]=="1850" or .[70]=="675" or .[70]=="5103" or .[70]=="5104" or .[70]=="1180" or .[70]=="5150" or .[70]=="3281" or .[70]=="3282" or .[70]=="3283" or .[70]=="3284" or .[70]=="3285" or .[70]=="3300" or .[70]=="2160" or .[70]=="3360" or .[70]=="3250" or .[70]=="5190" or .[70]=="053" or .[70]=="059" or .[70]=="1068" or .[70]=="1069" or .[70]=="2022" or .[70]=="2584" or .[70]=="2585" or .[70]=="2333" or .[70]=="088" or .[70]=="091" or .[70]=="150" or .[70]=="502" or .[70]=="532" or .[70]=="1341" or .[70]=="1342" or .[70]=="3402" or .[70]=="3466" or .[70]=="3632" or .[70]=="3730" or .[70]=="4784" or .[70]=="4732" or .[70]=="4924" or .[70]=="120" or .[70]=="167" or .[70]=="1025" or .[70]=="1027" or .[70]=="1725" or .[70]=="4165" or .[70]=="4193" or .[70]=="3919" or .[70]=="5367" or .[70]=="5404" or .[70]=="5487" or .[70]=="5524" or .[70]=="078" or .[70]=="081" or .[70]=="632" or .[70]=="634" or .[70]=="636" or .[70]=="638" or .[70]=="1680" or .[70]=="2845" or .[70]=="2865" or .[70]=="2885" or .[70]=="2761" or .[70]=="2762" or .[70]=="2770")`
+	rule := reg.FindAllStringSubmatch(query, -1)
+	servers := []string{}
+
+	for _, a := range rule {
+		intVal := S2i(a[1])
+		hexVal := strconv.FormatInt(int64(intVal), 16)
+		servers = append(servers, hexVal)
+	}
+	newQuery := strings.Join(servers, `" or .[70]=="`)
+	fmt.Println(newQuery)
+
+	return
 	if *test {
 		expectedAnswer := 6
 		sample := ReadInputLines("/home/daniel.shanker/Pers/AdventOfCode/2023/day8/sample.txt")

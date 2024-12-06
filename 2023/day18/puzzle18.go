@@ -1,6 +1,9 @@
 package main
 
 import (
+	"bytes"
+	"encoding/base64"
+	"encoding/binary"
 	"flag"
 	"fmt"
 	"math"
@@ -9,10 +12,34 @@ import (
 	. "utils"
 )
 
+func getBase64(val int32) {
+	shifted := val << 4
+	buf := new(bytes.Buffer)
+	err := binary.Write(buf, binary.BigEndian, shifted)
+	if err != nil {
+		fmt.Println("ERROR: binary.Write failed:", err)
+	}
+	blst := buf.Bytes()
+	encoded_3bytes := base64.RawStdEncoding.EncodeToString(blst)
+	if encoded_3bytes[2] != 'A' {
+		fmt.Println("ERROR: unexpected encoding problem")
+	}
+	fmt.Println(encoded_3bytes)
+	// encoded := encoded_3bytes[4:]
+	// fmt.Println(encoded)
+}
+
 func main() {
 	test := flag.Bool("t", false, "use sample")
 	flag.Parse()
 
+	for i := 0; i < 4095; i++ {
+		fmt.Print(i)
+		fmt.Print(" - ")
+		getBase64(int32(i))
+	}
+
+	return
 	if *test {
 		expectedAnswer := 62
 		sample := ReadInputLines("/home/daniel.shanker/Pers/AdventOfCode/2023/day18/sample.txt")
