@@ -89,7 +89,7 @@ func Start(test *bool, day int, part1 P, part2 P, a1 int, a2 int) {
 		}
 	} else {
 		input := ReadInputLines(fmt.Sprintf("/home/daniel.shanker/Pers/AdventOfCode/2024/day%d/input.txt", day))
-		fmt.Printf("day5 Answer 1 : %d\n", part1(input))
-		fmt.Printf("day5 Answer 2 : %d\n", part2(input))
+		fmt.Printf("day %d Answer 1 : %d\n", day, part1(input))
+		fmt.Printf("day %d Answer 2 : %d\n", day, part2(input))
 	}
 }
