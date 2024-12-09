@@ -6,8 +6,7 @@ import (
 )
 
 func main() {
-	debug := false
-	test := flag.Bool("t", debug, "use sample")
+	test := flag.Bool("t", false, "use sample")
 	flag.Parse()
 
 	Start(test, 9, part1, part2, 1928, 2858)
