@@ -16,8 +16,8 @@ func main() {
 }
 
 type ant struct {
-	orig   string
-	signal map[string]struct{}
+	orig  string
+	found bool
 	coord
 }
 
@@ -37,9 +37,8 @@ func part1(lines []string) int {
 			if char != "." {
 				c := coord{x: j, y: i}
 				a := ant{
-					coord:  c,
-					orig:   char,
-					signal: map[string]struct{}{},
+					coord: c,
+					orig:  char,
 				}
 				ants[c] = a
 			}
@@ -63,17 +62,14 @@ func part1(lines []string) int {
 			}
 			xy := coord{x: newX, y: newY}
 
-			if _, ok := ants[xy]; !ok {
-				ants[xy] = ant{
-					signal: map[string]struct{}{},
-				}
-			}
-			ants[xy].signal[a.orig] = struct{}{}
+			newA := ants[xy]
+			newA.found = true
+			ants[xy] = newA
 		}
 	}
 
 	for _, a := range ants {
-		if len(a.signal) > 0 {
+		if a.found {
 			answer++
 		}
 	}
@@ -92,10 +88,11 @@ func part2(lines []string) int {
 			if char != "." {
 				c := coord{x: j, y: i}
 				a := ant{
-					coord:  c,
-					orig:   char,
-					signal: map[string]struct{}{char: struct{}{}},
+					coord: c,
+					orig:  char,
+					found: true,
 				}
+
 				ants[c] = a
 			}
 		}
@@ -123,18 +120,15 @@ func part2(lines []string) int {
 				}
 				xy := coord{x: newX, y: newY}
 
-				if _, ok := ants[xy]; !ok {
-					ants[xy] = ant{
-						signal: map[string]struct{}{},
-					}
-				}
-				ants[xy].signal[a.orig] = struct{}{}
+				newAnt := ants[xy]
+				newAnt.found = true
+				ants[xy] = newAnt
 			}
 		}
 	}
 
 	for _, a := range ants {
-		if len(a.signal) > 0 {
+		if a.found {
 			answer++
 		}
 	}
