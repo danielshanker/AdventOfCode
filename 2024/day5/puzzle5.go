@@ -12,7 +12,7 @@ import (
 func main() {
 	test := flag.Bool("t", false, "use sample")
 	flag.Parse()
-	Start(test, 5, part1, part2)
+	Start(test, 5, part1, part2, 143, 123)
 }
 
 type rule struct {

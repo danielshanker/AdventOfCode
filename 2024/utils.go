@@ -7,6 +7,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Stack []string
@@ -89,7 +90,21 @@ func Start(test *bool, day int, part1 P, part2 P, a1 int, a2 int) {
 		}
 	} else {
 		input := ReadInputLines(fmt.Sprintf("/home/daniel.shanker/Pers/AdventOfCode/2024/day%d/input.txt", day))
+		st := time.Now()
 		fmt.Printf("day %d Answer 1: %d\n", day, part1(input))
+		totalTime := time.Since(st)
+		if totalTime > time.Millisecond {
+			fmt.Printf("%dms\n", totalTime.Milliseconds())
+		} else {
+			fmt.Printf("%dμs\n", totalTime.Microseconds())
+		}
+		st = time.Now()
 		fmt.Printf("day %d Answer 2: %d\n", day, part2(input))
+		totalTime = time.Since(st)
+		if totalTime > time.Millisecond {
+			fmt.Printf("%dms\n", totalTime.Milliseconds())
+		} else {
+			fmt.Printf("%dμs\n", totalTime.Microseconds())
+		}
 	}
 }

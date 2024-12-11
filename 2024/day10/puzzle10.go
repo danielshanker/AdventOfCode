@@ -17,7 +17,6 @@ type point struct {
 	value          int
 	possiblePoints []*point
 	explored       bool
-	distance       int
 	x              int
 	y              int
 }
