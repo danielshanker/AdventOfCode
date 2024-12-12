@@ -20,8 +20,6 @@ type plot struct {
 	neighbours []*plot
 	sides      int
 	checked    bool
-	id         int
-	corners    int
 	lW         bool
 	dW         bool
 	rW         bool
