@@ -72,6 +72,8 @@ func (q *Queue) Push(str string) {
 type P func([]string) int
 
 func Start(test *bool, day int, part1 P, part2 P, a1 int, a2 int) {
+	//	justTime(day, part1, part2)
+	//	return
 	if *test {
 		expectedAnswer := a1
 		sample := ReadInputLines(fmt.Sprintf("/home/daniel.shanker/Pers/AdventOfCode/2024/day%d/sample.txt", day))
@@ -101,10 +103,36 @@ func Start(test *bool, day int, part1 P, part2 P, a1 int, a2 int) {
 		st = time.Now()
 		fmt.Printf("day %d Answer 2: %d\n", day, part2(input))
 		totalTime = time.Since(st)
-		if totalTime > time.Millisecond {
+		if totalTime >= time.Second {
+			fmt.Printf("%ds\n", int(totalTime.Seconds()))
+		} else if totalTime >= time.Millisecond {
 			fmt.Printf("%dms\n", totalTime.Milliseconds())
 		} else {
 			fmt.Printf("%dμs\n", totalTime.Microseconds())
 		}
+	}
+}
+
+func justTime(day int, part1 P, part2 P) {
+	input := ReadInputLines(fmt.Sprintf("/home/daniel.shanker/Pers/AdventOfCode/2024/day%d/input.txt", day))
+	st := time.Now()
+	part1(input)
+	totalTime := time.Since(st)
+	if totalTime >= time.Second {
+		fmt.Printf("day %d part 1: %ds\n", day, int(totalTime.Seconds()))
+	} else if totalTime >= time.Millisecond {
+		fmt.Printf("day %d part 1: %dms\n", day, totalTime.Milliseconds())
+	} else {
+		fmt.Printf("day %d part 1: %dμs\n", day, totalTime.Microseconds())
+	}
+	st = time.Now()
+	part2(input)
+	totalTime = time.Since(st)
+	if totalTime >= time.Second {
+		fmt.Printf("day %d part 2: %ds\n", day, int(totalTime.Seconds()))
+	} else if totalTime >= time.Millisecond {
+		fmt.Printf("day %d part 2: %dms\n", day, totalTime.Milliseconds())
+	} else {
+		fmt.Printf("day %d part 2: %dμs\n", day, totalTime.Microseconds())
 	}
 }
