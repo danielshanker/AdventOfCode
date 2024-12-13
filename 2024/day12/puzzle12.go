@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	. "utils"
 )
 
@@ -24,6 +25,7 @@ type plot struct {
 	dW         bool
 	rW         bool
 	uW         bool
+	colour     int
 }
 
 func part1(lines []string) int {
@@ -69,15 +71,24 @@ func part1(lines []string) int {
 
 	regions := [][]*plot{}
 
+	colour := 41
 	for _, line := range plots {
 		for _, p := range line {
+			if colour > 107 {
+				colour = 41
+			} else if colour > 47 && colour < 100 {
+				colour = 100
+			}
 			if !p.checked {
 				region := []*plot{}
-				region = fillRegion(region, p)
+				region = fillRegion(region, p, colour)
 				regions = append(regions, region)
+				colour++
 			}
 		}
 	}
+
+	//visualize(plots)
 
 	for _, region := range regions {
 		for _, plot := range region {
@@ -140,12 +151,17 @@ func part2(lines []string) int {
 
 	regions := [][]*plot{}
 
+	colour := 31
 	for _, line := range plots {
 		for _, p := range line {
+			if colour >= 37 {
+				colour = 31
+			}
 			if !p.checked {
 				region := []*plot{}
-				region = fillRegion(region, p)
+				region = fillRegion(region, p, colour)
 				regions = append(regions, region)
+				colour++
 			}
 		}
 	}
@@ -262,15 +278,26 @@ func walk(region []*plot) int {
 	return fences
 }
 
-func fillRegion(region []*plot, p *plot) []*plot {
+func fillRegion(region []*plot, p *plot, colour int) []*plot {
 	p.checked = true
+	p.colour = colour
 	region = append(region, p)
 
 	for _, n := range p.neighbours {
 		if !n.checked {
-			region = fillRegion(region, n)
+			region = fillRegion(region, n, colour)
 		}
 	}
 
 	return region
+}
+
+func visualize(plots [][]*plot) {
+	for _, line := range plots {
+		for _, p := range line {
+			fmt.Printf("\033[%dm ", p.colour)
+		}
+		fmt.Printf("\033[0m")
+		fmt.Println()
+	}
 }
