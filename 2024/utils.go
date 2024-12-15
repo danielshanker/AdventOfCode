@@ -12,6 +12,11 @@ import (
 
 type Stack []string
 
+type Coord struct {
+	X int
+	Y int
+}
+
 func S2i(val string) int {
 	num, err := strconv.Atoi(val)
 	if err != nil {
