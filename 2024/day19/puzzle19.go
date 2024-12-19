@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"strings"
 	. "utils"
 )
@@ -86,9 +85,6 @@ func part2(lines []string) int {
 func isPossiblePart2(towels []string, desired string, badCache map[string]bool, goodCache map[string]int) int {
 	if len(desired) == 0 {
 		return 1
-	}
-	if desired == "rrbgbr" {
-		fmt.Println()
 	}
 
 	if badCache[desired] {
