@@ -115,8 +115,11 @@ func Start(test *bool, day int, part1 P, part2 P, a1 int, a2 int) {
 		st := time.Now()
 		fmt.Printf("day %d Answer 1: %d\n", day, part1(input))
 		totalTime := time.Since(st)
-		if totalTime > time.Millisecond {
-			fmt.Printf("%dms\n", totalTime.Milliseconds())
+		if totalTime >= time.Second {
+			fmt.Printf("%.03fs\n", totalTime.Seconds())
+		} else if totalTime > time.Millisecond {
+			a := float64(totalTime.Microseconds()) / 1000
+			fmt.Printf("%.03fms\n", a)
 		} else {
 			fmt.Printf("%dμs\n", totalTime.Microseconds())
 		}
@@ -124,9 +127,10 @@ func Start(test *bool, day int, part1 P, part2 P, a1 int, a2 int) {
 		fmt.Printf("day %d Answer 2: %d\n", day, part2(input))
 		totalTime = time.Since(st)
 		if totalTime >= time.Second {
-			fmt.Printf("%ds\n", int(totalTime.Seconds()))
+			fmt.Printf("%.03fs\n", totalTime.Seconds())
 		} else if totalTime >= time.Millisecond {
-			fmt.Printf("%dms\n", totalTime.Milliseconds())
+			a := float64(totalTime.Microseconds()) / 1000
+			fmt.Printf("%.03fms\n", a)
 		} else {
 			fmt.Printf("%dμs\n", totalTime.Microseconds())
 		}
@@ -139,9 +143,10 @@ func justTime(day int, part1 P, part2 P) {
 	part1(input)
 	totalTime := time.Since(st)
 	if totalTime >= time.Second {
-		fmt.Printf("day %d part 1: %ds\n", day, int(totalTime.Seconds()))
+		fmt.Printf("day %d part 1: %fs\n", day, totalTime.Seconds())
 	} else if totalTime >= time.Millisecond {
-		fmt.Printf("day %d part 1: %dms\n", day, totalTime.Milliseconds())
+		a := float64(totalTime.Microseconds()) / 1000
+		fmt.Printf("%.03fms\n", a)
 	} else {
 		fmt.Printf("day %d part 1: %dμs\n", day, totalTime.Microseconds())
 	}
@@ -149,9 +154,10 @@ func justTime(day int, part1 P, part2 P) {
 	part2(input)
 	totalTime = time.Since(st)
 	if totalTime >= time.Second {
-		fmt.Printf("day %d part 2: %ds\n", day, int(totalTime.Seconds()))
+		fmt.Printf("day %d part 2: %fs\n", day, totalTime.Seconds())
 	} else if totalTime >= time.Millisecond {
-		fmt.Printf("day %d part 2: %dms\n", day, totalTime.Milliseconds())
+		a := float64(totalTime.Microseconds()) / 1000
+		fmt.Printf("%.03fms\n", a)
 	} else {
 		fmt.Printf("day %d part 2: %dμs\n", day, totalTime.Microseconds())
 	}
