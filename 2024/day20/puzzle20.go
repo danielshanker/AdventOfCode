@@ -47,7 +47,6 @@ func part1(lines []string) int {
 	maxWidth := len(lines[0])
 	points := map[Coord]*point{}
 	var start *point
-	walls := []Coord{}
 
 	for i := 0; i < maxHeight; i++ {
 		for j := 0; j < maxWidth; j++ {
@@ -74,7 +73,6 @@ func part1(lines []string) int {
 			}
 			if string(r) == "#" {
 				p.isWall = true
-				walls = append(walls, c)
 			}
 			points[c] = &p
 		}
@@ -212,7 +210,7 @@ func part2(lines []string) int {
 	maxWidth := len(lines[0])
 	points := map[Coord]*point{}
 	var start *point
-	walls := []Coord{}
+	freeSpace := []Coord{}
 
 	for i := 0; i < maxHeight; i++ {
 		for j := 0; j < maxWidth; j++ {
@@ -239,7 +237,8 @@ func part2(lines []string) int {
 			}
 			if string(r) == "#" {
 				p.isWall = true
-				walls = append(walls, c)
+			} else {
+				freeSpace = append(freeSpace, c)
 			}
 			points[c] = &p
 		}
@@ -304,20 +303,15 @@ func part2(lines []string) int {
 
 	saves := map[int]int{}
 	cheats := map[cheating]bool{}
-	for c, p := range points {
-		if !p.isWall {
-			for endC, endP := range points {
-				if endP.isWall {
-					continue
-				}
+	for _, c := range freeSpace {
+		for _, endC := range freeSpace {
+			d := AbsDistance(endC, c)
+			if d <= 20 {
 				cheat := cheating{}
-				d := AbsDistance(endC, c)
-				if d <= 20 {
-					cheat.start = c
-					cheat.end = endC
-					cheat.distance = d
-					cheats[cheat] = true
-				}
+				cheat.start = c
+				cheat.end = endC
+				cheat.distance = d
+				cheats[cheat] = true
 			}
 		}
 	}
@@ -338,55 +332,4 @@ func part2(lines []string) int {
 	}
 
 	return answer
-}
-
-func checkNeighbours(endC Coord, startC Coord, points map[Coord]*point, d int) bool {
-	return true
-	if d == 0 {
-		return true
-	}
-
-	// north
-	nc := Coord{
-		X: endC.X,
-		Y: endC.Y - 1,
-	}
-	x := AbsDistance(startC, nc)
-	if points[nc] != nil && points[nc].isWall && x == d-1 {
-		if checkNeighbours(nc, startC, points, d-1) {
-			return true
-		}
-	}
-	// south
-	nc = Coord{
-		X: endC.X,
-		Y: endC.Y + 1,
-	}
-	if points[nc] != nil && points[nc].isWall && AbsDistance(startC, nc) == d-1 {
-		if checkNeighbours(nc, startC, points, d-1) {
-			return true
-		}
-	}
-	// west
-	nc = Coord{
-		X: endC.X - 1,
-		Y: endC.Y,
-	}
-	if points[nc] != nil && points[nc].isWall && AbsDistance(startC, nc) == d-1 {
-		if checkNeighbours(nc, startC, points, d-1) {
-			return true
-		}
-	}
-	// east
-	nc = Coord{
-		X: endC.X + 1,
-		Y: endC.Y,
-	}
-	if points[nc] != nil && points[nc].isWall && AbsDistance(startC, nc) == d-1 {
-		if checkNeighbours(nc, startC, points, d-1) {
-			return true
-		}
-	}
-
-	return false
 }
