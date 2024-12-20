@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -15,6 +16,20 @@ type Stack []string
 type Coord struct {
 	X int
 	Y int
+}
+
+func Distance(c1, c2 Coord) Coord {
+	x := int(math.Abs(float64(c1.X - c2.X)))
+	y := int(math.Abs(float64(c1.Y - c2.Y)))
+
+	return Coord{x, y}
+}
+
+func AbsDistance(c1, c2 Coord) int {
+	x := int(math.Abs(float64(c1.X - c2.X)))
+	y := int(math.Abs(float64(c1.Y - c2.Y)))
+
+	return x + y
 }
 
 func S2i(val string) int {
