@@ -78,14 +78,16 @@ func part2(lines []string) int {
 			three = two
 			two = one
 			one = (secret % 10) - lastSecret
-			if i > 4 {
+			if i > 3 {
 				s := make([]string, 4)
 				s[0] = strconv.Itoa(four)
 				s[1] = strconv.Itoa(three)
 				s[2] = strconv.Itoa(two)
 				s[3] = strconv.Itoa(one)
 				seq := strings.Join(s, ",")
-				singleSequence[seq] = secret % 10
+				if _, ok := singleSequence[seq]; !ok {
+					singleSequence[seq] = secret % 10
+				}
 			}
 			lastSecret = secret % 10
 		}
@@ -99,8 +101,6 @@ func part2(lines []string) int {
 			answer = v
 		}
 	}
-
-	// ANSWER SHOULD BE 1612 BUT GETTING 1614, GO BACK AND FIGURE OUT WHY
 
 	return answer
 }
