@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"slices"
-	"sort"
 	"strings"
 	. "utils"
 )
@@ -137,10 +136,6 @@ func largestClique(connections []connection) []string {
 	for node := range graph {
 		nodes = append(nodes, node)
 	}
-
-	sort.Slice(nodes, func(i, j int) bool {
-		return len(graph[nodes[i]]) > len(graph[nodes[j]])
-	})
 
 	var largestClique []string
 
