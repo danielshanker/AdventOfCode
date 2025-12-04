@@ -138,7 +138,7 @@ func Start(test *bool, day int, part1 P, part2 P, a1 int, a2 int) {
 }
 
 func justTime(day int, part1 P, part2 P) {
-	input := ReadInputLines(fmt.Sprintf("/home/daniel.shanker/Pers/AdventOfCode/2024/day%d/input.txt", day))
+	input := ReadInputLines(fmt.Sprintf("day%d/input.txt", day))
 	st := time.Now()
 	part1(input)
 	totalTime := time.Since(st)
