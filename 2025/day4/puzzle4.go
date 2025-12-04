@@ -15,35 +15,25 @@ func main() {
 
 }
 
-type cell struct {
-	coord    Coord
-	hasPaper bool
-}
-
 func part1(lines []string) int {
 	answer := 0
 
-	grid := make(map[Coord]cell)
+	grid := make(map[Coord]bool)
 
 	for i, line := range lines {
 		for j, r := range line {
-			coord := Coord{
-				X: j,
-				Y: i,
+			if r == '@' {
+				coord := Coord{
+					X: j,
+					Y: i,
+				}
+				grid[coord] = true
 			}
-			c := cell{
-				coord:    coord,
-				hasPaper: string(r) == "@",
-			}
-			grid[coord] = c
 		}
 	}
 
-	for _, cell := range grid {
-		if !cell.hasPaper {
-			continue
-		}
-		if checkNeightbours(grid, cell.coord) {
+	for coord := range grid {
+		if checkNeightbours(grid, coord) {
 			answer++
 		}
 	}
@@ -53,40 +43,30 @@ func part1(lines []string) int {
 
 func part2(lines []string) int {
 	answer := 0
-	grid := make(map[Coord]cell)
+	grid := make(map[Coord]bool)
 
 	for i, line := range lines {
 		for j, r := range line {
-			coord := Coord{
-				X: j,
-				Y: i,
+			if r == '@' {
+				coord := Coord{
+					X: j,
+					Y: i,
+				}
+				grid[coord] = true
 			}
-			c := cell{
-				coord:    coord,
-				hasPaper: string(r) == "@",
-			}
-			grid[coord] = c
 		}
 	}
 
 	for {
 		changes := []Coord{}
-		for _, cell := range grid {
-			if !cell.hasPaper {
-				continue
-			}
-			if checkNeightbours(grid, cell.coord) {
+		for coord := range grid {
+			if checkNeightbours(grid, coord) {
 				answer++
-				changes = append(changes, cell.coord)
+				changes = append(changes, coord)
+				delete(grid, coord)
 			}
 		}
-		if len(changes) > 0 {
-			for _, c := range changes {
-				cell := grid[c]
-				cell.hasPaper = false
-				grid[c] = cell
-			}
-		} else {
+		if len(changes) == 0 {
 			break
 		}
 	}
@@ -94,27 +74,32 @@ func part2(lines []string) int {
 	return answer
 }
 
-func checkNeightbours(grid map[Coord]cell, coord Coord) bool {
+var neighbourOffset = []Coord{
+	{X: 0, Y: -1},
+	{X: 1, Y: -1},
+	{X: -1, Y: -1},
+	{X: 0, Y: 1},
+	{X: 1, Y: 1},
+	{X: -1, Y: 1},
+	{X: 1, Y: 0},
+	{X: -1, Y: 0},
+}
+
+func checkNeightbours(grid map[Coord]bool, coord Coord) bool {
 	paperNeighbours := 0
-	neighbours := []Coord{
-		{X: coord.X, Y: coord.Y - 1},
-		{X: coord.X + 1, Y: coord.Y - 1},
-		{X: coord.X - 1, Y: coord.Y - 1},
-		{X: coord.X, Y: coord.Y + 1},
-		{X: coord.X + 1, Y: coord.Y + 1},
-		{X: coord.X - 1, Y: coord.Y + 1},
-		{X: coord.X + 1, Y: coord.Y},
-		{X: coord.X - 1, Y: coord.Y},
-	}
-	for _, n := range neighbours {
-		if grid[n].hasPaper {
-			paperNeighbours++
+	for _, n := range neighbourOffset {
+		nb := Coord{
+			X: coord.X + n.X,
+			Y: coord.Y + n.Y,
 		}
-		if paperNeighbours >= 4 {
-			return false
+		if grid[nb] {
+			paperNeighbours++
+			if paperNeighbours >= 4 {
+				return false
+			}
 		}
 	}
 
-	return paperNeighbours < 4
+	return true
 
 }
