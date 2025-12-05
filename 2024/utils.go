@@ -96,7 +96,7 @@ func Start(test *bool, day int, part1 P, part2 P, a1 int, a2 int) {
 	//	return
 	if *test {
 		expectedAnswer := a1
-		sample := ReadInputLines(fmt.Sprintf("/home/daniel.shanker/Pers/AdventOfCode/2024/day%d/sample.txt", day))
+		sample := ReadInputLines(fmt.Sprintf("../day%d/sample.txt", day))
 		answer1 := part1(sample)
 		if expectedAnswer == answer1 {
 			fmt.Println(fmt.Sprintf("Correct Answer %d", answer1))
@@ -111,7 +111,7 @@ func Start(test *bool, day int, part1 P, part2 P, a1 int, a2 int) {
 			fmt.Println(fmt.Sprintf("expected %d, got %d", expectedAnswer, answer2))
 		}
 	} else {
-		input := ReadInputLines(fmt.Sprintf("/home/daniel.shanker/Pers/AdventOfCode/2024/day%d/input.txt", day))
+		input := ReadInputLines(fmt.Sprintf("../day%d/input.txt", day))
 		st := time.Now()
 		fmt.Printf("day %d Answer 1: %d\n", day, part1(input))
 		totalTime := time.Since(st)
