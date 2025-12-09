@@ -32,6 +32,25 @@ func AbsDistance(c1, c2 Coord) int {
 	return x + y
 }
 
+func Area(c1, c2 Coord) int {
+	x := int(math.Abs(float64(c1.X-c2.X))) + 1
+	y := int(math.Abs(float64(c1.Y-c2.Y))) + 1
+
+	return x * y
+}
+
+func Min(a, b int) int {
+	return int(math.Min(float64(a), float64(b)))
+}
+
+func Max(a, b int) int {
+	return int(math.Max(float64(a), float64(b)))
+}
+
+func ToPointer[T any](v T) *T {
+	return &v
+}
+
 func S2i(val string) int {
 	num, err := strconv.Atoi(val)
 	if err != nil {
