@@ -181,3 +181,15 @@ func justTime(day int, part1 P, part2 P) {
 		fmt.Printf("day %d part 2: %dμs\n", day, totalTime.Microseconds())
 	}
 }
+
+func IsEqual[T comparable](v1 []T, v2 []T) bool {
+	if len(v1) != len(v2) {
+		return false
+	}
+	for i, v := range v1 {
+		if v != v2[i] {
+			return false
+		}
+	}
+	return true
+}
